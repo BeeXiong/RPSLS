@@ -1,1 +1,7 @@
 C:\Users\Bee\Documents\Visual Studio 2015\Projects\Rock Paper Scissors Lizard Spock\Rock Paper Scissors Lizard Spock\bin\Debug\Rock Paper Scissors Lizard Spock.exe.config
+C:\Users\Bee\Desktop\Git\RPSLS\Game\Rock Paper Scissors Lizard Spock\bin\Debug\Rock Paper Scissors Lizard Spock.exe.config
+C:\Users\Bee\Desktop\Git\RPSLS\Game\Rock Paper Scissors Lizard Spock\bin\Debug\Rock Paper Scissors Lizard Spock.exe
+C:\Users\Bee\Desktop\Git\RPSLS\Game\Rock Paper Scissors Lizard Spock\bin\Debug\Rock Paper Scissors Lizard Spock.pdb
+C:\Users\Bee\Desktop\Git\RPSLS\Game\Rock Paper Scissors Lizard Spock\obj\Debug\RPSLS.csprojResolveAssemblyReference.cache
+C:\Users\Bee\Desktop\Git\RPSLS\Game\Rock Paper Scissors Lizard Spock\obj\Debug\Rock Paper Scissors Lizard Spock.exe
+C:\Users\Bee\Desktop\Git\RPSLS\Game\Rock Paper Scissors Lizard Spock\obj\Debug\Rock Paper Scissors Lizard Spock.pdb

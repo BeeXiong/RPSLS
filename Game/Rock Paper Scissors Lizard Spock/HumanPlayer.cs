@@ -5,26 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RPSLS
-{
-    class HumanPlayer
+{ 
+    public class HumanPlayer : ParentPlayer
     {
+
         public string playerName;
-        public string playerSelection;
-        public string playerChoice;
-        public int playerScore;
-        public int playerPoints;
 
-        public HumanPlayer(string playerName, string playerSelection, string playerChoice, int playerScore, int playerPoints)
+        public HumanPlayer(string playerSelection, int score)
+                : base(playerSelection, score)
         {
-            this.playerName = playerName;
             
-            this.playerSelection = playerSelection;
-            this.playerChoice = playerChoice;
-            this.playerScore = playerScore;
-            this.playerPoints = playerPoints;
         }
-            
-        
 
+        public void  Selection()
+        {
+
+        }
+
+
+
+              
+       
+      
     }
 }
