@@ -14,6 +14,7 @@ namespace RPSLS
             
         }
 
+        Random rand = new Random();
 
         public override string GetPlayerName()
         {
@@ -57,12 +58,23 @@ namespace RPSLS
 
         public override void MakeSelection()
         {
-            
+            Console.WriteLine("Alright it's the {0} turn", playerName); /*error - playerName isnt linked to the instance created in RPSLSactions*/
+            GetPlayerSelection(selections[rand.Next(0, 5)]); 
         }
 
-        public override void GetPlayerSelection(string userentry)
+        public override void GetPlayerSelection(string entry)
         {
-            base.GetPlayerSelection(userentry);
+            playerSelection = entry;
+        }
+
+        public void DisplaySelection()
+        {
+            Console.WriteLine(" {0} picks {1}", playerName, playerSelection); /*error - playerName isnt linked to the instance created in RPSLSactions*/
+        }
+
+        public override int TrackScore()
+        {
+            return playerScore;
         }
     }
 }

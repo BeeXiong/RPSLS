@@ -8,14 +8,15 @@ namespace RPSLS
 {
     public class RpslsActions
     {
-        public string comparison;
         ParentPlayer firstPlayer;
         ParentPlayer secondPlayer;
+        ParentPlayer listToCompare;
+        public int computedWinner;
 
 
-        public RpslsActions(string comparison)
+        public RpslsActions()
         {
-            this.comparison = comparison;
+           
         }
 
         public void DisplayWelcome()
@@ -70,5 +71,57 @@ namespace RPSLS
             Console.WriteLine("Spock vaporizes Rock");
             Console.WriteLine("Rock crushes Scissors");
         }
+
+        public void GameLoop()
+        {
+            firstPlayer.MakeSelection();
+            secondPlayer.MakeSelection();
+            FindGameWinner();
+
+        }
+
+        public void FindGameWinner()
+        {
+            int index = 0;
+            listToCompare = new ParentPlayer();
+            
+            while (firstPlayer.TrackScore() < 2 && secondPlayer.TrackScore() < 2)
+            {
+                if (computedWinner % 2 != 0)  
+                {
+                    Console.WriteLine("Congrats {0}, you are the winner!", firstPlayer);
+                    AwardPoints(index++); 
+                }
+                else if (computedWinner % 2 == 0)
+                {
+                    Console.WriteLine("Congrats {0}, you are the winner!", secondPlayer);
+                    AwardPoints(index++);
+                }
+                else if (computedWinner == 0)
+                {
+                    Console.WriteLine("It's a Tie! please select again!");
+                }
+                else
+                {
+                    Console.WriteLine("Something went wrong. Try again!");
+                }
+            }
+        }
+
+        public void ComputeSelections(int compute)
+        {
+            compute = (5 + listToCompare.selections.IndexOf(firstPlayer.playerSelection) - listToCompare.selections.IndexOf(secondPlayer.playerSelection)) % 5;  
+        }
+
+        public int GetRoundWinner()
+        {
+            return computedWinner;
+        }
+        public int AwardPoints(int score)
+        {
+            return firstPlayer.TrackScore();
+        }
+
+
     }
 }

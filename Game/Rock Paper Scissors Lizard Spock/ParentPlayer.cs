@@ -11,8 +11,8 @@ namespace RPSLS
 
         public string playerSelection;
         public string playerName;
-        protected int score;
-        protected List<string> selections = new List<string>() { "Rock", "Paper", "Scissors", "Lizard", "Spock" };
+        protected int playerScore;
+        public List<string> selections = new List<string>() { "Rock", "Paper", "Scissors", "Lizard", "Spock" };
         public ParentPlayer()
             {
             }
@@ -24,7 +24,7 @@ namespace RPSLS
             return playerName;
         }
 
-        public virtual void GetPlayerSelection(string userentry)
+        public virtual void GetPlayerSelection(string entry)
         {
             Console.WriteLine("If this message is seen, there is a problem with the code.");
             throw new Exception();
@@ -36,9 +36,10 @@ namespace RPSLS
             throw new Exception();
         }
 
-        public void TrackScore()
+        public virtual int TrackScore()
         {
-
+            Console.WriteLine("If this message is seen, there is a problem with the code.");
+            throw new Exception();
         }
     }
 }

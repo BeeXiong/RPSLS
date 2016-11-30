@@ -26,9 +26,9 @@ namespace RPSLS
         //    Console.WriteLine("If this picks the right one it will show {0}", playerSelection);
         //}
 
-        public override void GetPlayerSelection(string userentry)
+        public override void GetPlayerSelection(string entry)
         {
-            playerSelection = userentry;
+            playerSelection = entry;
         }
 
         public override void MakeSelection()
@@ -58,6 +58,11 @@ namespace RPSLS
                     MakeSelection();
                     break;
             }
+
+        }
+        public override int TrackScore()
+        {
+            return playerScore;
         }
 
 
