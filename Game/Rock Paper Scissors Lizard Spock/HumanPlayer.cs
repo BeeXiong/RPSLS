@@ -9,23 +9,61 @@ namespace RPSLS
     public class HumanPlayer : ParentPlayer
     {
 
-        public string playerName;
-
-        public HumanPlayer(string playerSelection, int score)
-                : base(playerSelection, score)
+        public HumanPlayer()
+                
         {
             
         }
 
-        public void  Selection()
+        public override string GetPlayerName()
         {
+            playerName = Console.ReadLine();
+            return playerName;
+        }
 
+        //public void DisplaySelection()
+        //{
+        //    Console.WriteLine("If this picks the right one it will show {0}", playerSelection);
+        //}
+
+        public override void GetPlayerSelection(string userentry)
+        {
+            playerSelection = userentry;
+        }
+
+        public override void MakeSelection()
+
+        {
+            Console.WriteLine("Please make your selection: 'Rock' - 'Paper' - 'Scissors' - 'Lizard' - 'Spock' ");
+            string userinput = Console.ReadLine().ToLower();
+            switch (userinput)
+            {
+                case "rock":
+                    GetPlayerSelection(userinput);
+                    break;
+                case "paper":
+                    GetPlayerSelection(userinput);
+                    break;
+                case "scissors":
+                    GetPlayerSelection(userinput);
+                    break;
+                case "lizard":
+                    GetPlayerSelection(userinput);
+                    break;
+                case "spock":
+                    GetPlayerSelection(userinput);
+                    break;
+                default:
+                    Console.WriteLine("Not a valid selection. Please try again.");
+                    MakeSelection();
+                    break;
+            }
         }
 
 
 
-              
-       
-      
+
+
+
     }
 }

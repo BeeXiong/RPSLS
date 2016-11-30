@@ -8,27 +8,27 @@ namespace RPSLS
 {
     public class Ai : ParentPlayer
     {
-        public string AiName;
-        public Ai(string playerSelection, int score)
-            :base(playerSelection, score)
+        public Ai()
+            
         {
             
         }
 
-        public void  Selection()
-        {
 
+        public override string GetPlayerName()
+        {
+            NameAi();
+            DisplayAiName();
+            return playerName;
+        }
+        public void NameAi()
+        {
+            playerName = FindAi();
         }
 
         public void DisplayAiName()
         {
-            Console.WriteLine("You will be playing against {0}", AiName);
-        }
-
-        public void NameAi()
-        {
-            AiName = FindAi();
-            DisplayAiName();
+            Console.WriteLine("You will be playing against {0}", playerName);
         }
 
         public string FindAi()
@@ -48,12 +48,21 @@ namespace RPSLS
             {
                 return "Raj";
             }
-            else 
+            else
             {
                 return "Penny";
             }
 
         }
 
+        public override void MakeSelection()
+        {
+            
+        }
+
+        public override void GetPlayerSelection(string userentry)
+        {
+            base.GetPlayerSelection(userentry);
+        }
     }
 }

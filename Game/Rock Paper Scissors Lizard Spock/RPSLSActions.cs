@@ -9,37 +9,18 @@ namespace RPSLS
     public class RpslsActions
     {
         public string comparison;
-        
-        
+        ParentPlayer firstPlayer;
+        ParentPlayer secondPlayer;
+
+
         public RpslsActions(string comparison)
         {
             this.comparison = comparison;
         }
 
-        HumanPlayer playerOne = new HumanPlayer("Paper", 0);
-        HumanPlayer playerTwo = new HumanPlayer("Rock", 0);
-        Ai BangChar = new Ai("Rock", 0);
-
         public void DisplayWelcome()
         {
             Console.WriteLine("Welcome to Rock, Paper, Scissors, Lizard, Spock ");
-        }
-
-        public void ChooseName()
-        {
-            Console.WriteLine("Please choose your name");
-            playerOne.playerName = Console.ReadLine();
-            Console.WriteLine("Alright {0}, Let's get started!", ConvertUpper(playerOne.playerName));
-        
-        }
-
-        public void ChoosePlayers()
-        {
-            Console.WriteLine("Player 1 please choose your name");
-            playerOne.playerName = Console.ReadLine();
-            Console.WriteLine("Player 2 please choose your name");
-            playerTwo.playerName = Console.ReadLine();
-            Console.WriteLine("Alright {0} and {1}, Let's get started!", ConvertUpper(playerOne.playerName), ConvertUpper(playerTwo.playerName));
         }
 
         public string ConvertUpper(string text)
@@ -48,21 +29,46 @@ namespace RPSLS
         }
         public void SetPlayers()
         {
-            Console.WriteLine("Number of Players? '1' or '2' ");
+            Console.WriteLine("Please Choose number of Players? '1' or '2' ");
             string userinput = Console.ReadLine();
             int number;
             int.TryParse(userinput, out number);           
             if (number == 1)
             {
-                ChooseName(); 
-                BangChar.NameAi();
+                firstPlayer = new HumanPlayer();
+                secondPlayer = new Ai();
+            }
+            else if (number == 2)
+            {
+                firstPlayer = new HumanPlayer();
+                secondPlayer = new HumanPlayer();
             }
             else
             {
-                ChoosePlayers();
+                Console.WriteLine("I'm sorry. I didn't get that. Could you please type '1' or '2' ");
             }
-                
         }
-        
+        public void NamePlayers()
+        {
+            Console.WriteLine("Player 1 please choose your name");
+            firstPlayer.GetPlayerName();
+            Console.WriteLine("Player 2");
+            secondPlayer.GetPlayerName();
+            Console.WriteLine("Alright {0} and {1}, Let's get started!", ConvertUpper(firstPlayer.playerName), ConvertUpper(secondPlayer.playerName));
+        }
+        public void ShowGameRules()
+        {
+            Console.WriteLine("Here are the rules!");
+            Console.WriteLine("Players make their choice and...");
+            Console.WriteLine("Paper covers Rock");
+            Console.WriteLine("Rock crushes Lizard");
+            Console.WriteLine("Lizard poisons Spock");
+            Console.WriteLine("Spock smashes Scissorsr");
+            Console.WriteLine("Scissors decapitates Lizard");
+            Console.WriteLine("Lizard eats Paperr");
+            Console.WriteLine("Paper disproves Spock");
+            Console.WriteLine("Spock vaporizes Rock");
+            Console.WriteLine("Rock crushes Scissors");
+        }
     }
 }

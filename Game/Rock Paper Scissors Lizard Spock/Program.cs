@@ -10,14 +10,19 @@ namespace RPSLS
     {
         static void Main(string[] args)
         {
+            HumanPlayer test = new HumanPlayer();
+            Ai testing = new Ai();
+
             RpslsActions tester = new RpslsActions("test");
             tester.DisplayWelcome();
             tester.SetPlayers();
+            tester.NamePlayers();
+            tester.ShowGameRules();
+            test.MakeSelection();
+            
+            
+         
            
-
-            Ai testing = new Ai("fred", 3);
-   
-
 
 
 
