@@ -13,11 +13,10 @@ namespace RPSLS
             HumanPlayer test = new HumanPlayer();
             Ai testing = new Ai();
 
-            RpslsActions tester = new RpslsActions();
 
-            test.MakeSelection();
-            testing.MakeSelection();
-            tester.FindGameWinner();
+            
+           
+           
             
          
            

@@ -10,5 +10,6 @@ namespace RPSLSv2
     {
         public int playerScore { get; set; }
         public string playerGameSelection { get; set; }
+        public string playerName { get; set; }
     }
 }

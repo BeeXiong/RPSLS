@@ -10,6 +10,12 @@ namespace RPSLSv2
     {
         static void Main(string[] args)
         {
+            Game NewGame = new Game();
+           
+            NewGame.runGameLoop();
+
+
+         
         }
     }
 }
