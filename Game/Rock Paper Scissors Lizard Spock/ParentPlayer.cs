@@ -9,7 +9,7 @@ namespace RPSLS
     public class ParentPlayer
     {
 
-        public string playerSelection;
+        protected string playerSelection;
         public string playerName;
         protected int playerScore;
         public List<string> selections = new List<string>() { "Rock", "Paper", "Scissors", "Lizard", "Spock" };

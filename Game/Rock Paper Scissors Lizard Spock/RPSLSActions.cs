@@ -11,8 +11,7 @@ namespace RPSLS
         ParentPlayer firstPlayer;
         ParentPlayer secondPlayer;
         ParentPlayer listToCompare;
-        public int computedWinner;
-
+        int roundWinner;
 
         public RpslsActions()
         {
@@ -77,27 +76,29 @@ namespace RPSLS
             firstPlayer.MakeSelection();
             secondPlayer.MakeSelection();
             FindGameWinner();
-
         }
 
         public void FindGameWinner()
         {
             int index = 0;
             listToCompare = new ParentPlayer();
-            
             while (firstPlayer.TrackScore() < 2 && secondPlayer.TrackScore() < 2)
             {
-                if (computedWinner % 2 != 0)  
+
+                firstPlayer.MakeSelection();
+                secondPlayer.MakeSelection();
+
+                if (roundWinner % 2 != 0) 
                 {
                     Console.WriteLine("Congrats {0}, you are the winner!", firstPlayer);
                     AwardPoints(index++); 
                 }
-                else if (computedWinner % 2 == 0)
+                else if (roundWinner % 2 == 0)
                 {
                     Console.WriteLine("Congrats {0}, you are the winner!", secondPlayer);
                     AwardPoints(index++);
                 }
-                else if (computedWinner == 0)
+                else if (roundWinner == 0)
                 {
                     Console.WriteLine("It's a Tie! please select again!");
                 }
@@ -108,15 +109,14 @@ namespace RPSLS
             }
         }
 
-        public void ComputeSelections(int compute)
+        public int FindRoundWinner(int compute)
         {
-            compute = (5 + listToCompare.selections.IndexOf(firstPlayer.playerSelection) - listToCompare.selections.IndexOf(secondPlayer.playerSelection)) % 5;  
+            compute = (5 + listToCompare.selections.IndexOf(firstPlayer.playerSelection) - listToCompare.selections.IndexOf(secondPlayer.playerSelection)) % 5;
+            return roundWinner;
         }
 
-        public int GetRoundWinner()
-        {
-            return computedWinner;
-        }
+        
+
         public int AwardPoints(int score)
         {
             return firstPlayer.TrackScore();
