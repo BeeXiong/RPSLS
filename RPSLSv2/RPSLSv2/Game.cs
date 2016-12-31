@@ -13,27 +13,55 @@ namespace RPSLSv2
         List<string> gameChoices;
         public Game()
         {
- 
+            gameChoices = new List<string>() { "rock", "paper", "scissors", "spock", "lizard" };
         }
         public void runGameLoop()
         {
             displayWelcome();
-            string numberOfPlayers;
+            ContinueGame();
+            ClearScreen();
+            int numberOfPlayers;
             numberOfPlayers = determinePlayers();
+            ClearScreen();
             NamePlayers(numberOfPlayers);
-            promptSelection(firstPlayer);
-            makeSelection(firstPlayer);
-            promptSelection(secondPlayer);
-            makeSelection(secondPlayer);
-
+            int roundSelection;
+            roundSelection = determineGameRounds();
+            setStartingScore(firstPlayer, secondPlayer);
+            ClearScreen();
+            
+            while (firstPlayer.playerScore < roundSelection && secondPlayer.playerScore < roundSelection)
+            {
+                if (numberOfPlayers == 2)
+                {
+                    promptSelection(firstPlayer);
+                    makeSelection(firstPlayer);
+                    promptSelection(secondPlayer);
+                    makeSelection(secondPlayer);   
+                }
+                else if(numberOfPlayers == 1)
+                {
+                    promptSelection(firstPlayer);
+                    makeSelection(firstPlayer);
+                    MakeAiSelection(secondPlayer);  
+                }
+                int result;
+                result = comparePlayerSelections(firstPlayer, secondPlayer);
+                ContinueGame();
+                assignRoundPoints(result, firstPlayer, secondPlayer);
+                DisplayScore(firstPlayer,secondPlayer);
+                ContinueGame();
+                ClearScreen();
+            }
+            DetermineGameWinner(firstPlayer,secondPlayer);
+            DisplayRestartMessage();
             Console.ReadKey();
         }
         public void displayWelcome()
         {
             Console.WriteLine("Welcome to Rock, Paper, Scissors, Lizard, Spock ");
             Console.WriteLine("\r\nHere are the rules!");
-            Console.WriteLine("Players make their choice and...");
-            Console.WriteLine("Paper covers Rock");
+            Console.WriteLine("\r\nPlayers make their choice and...");
+            Console.WriteLine("\r\nPaper covers Rock");
             Console.WriteLine("Rock crushes Lizard");
             Console.WriteLine("Lizard poisons Spock");
             Console.WriteLine("Spock smashes Scissorsr");
@@ -43,17 +71,41 @@ namespace RPSLSv2
             Console.WriteLine("Spock vaporizes Rock");
             Console.WriteLine("Rock crushes Scissors");
         }
-        public string determinePlayers()
+        public int determinePlayers()
         {
             Console.WriteLine("\r\nHow many players will be playing?");
             Console.WriteLine("Please type '1' or '2'");
             string userInput;
-            userInput = Console.ReadLine().ToLower();
-            return userInput;
+            userInput = Console.ReadLine();
+            if (userInput == "1" || userInput == "2")
+            {
+                try
+                {
+                    int numberOfPlayers;
+                    int.TryParse(userInput, out numberOfPlayers);
+                    return numberOfPlayers;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Not a valid selection. Please try again.");
+                    determinePlayers();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid Selection. Please type either '1' or '2'");
+                determinePlayers();
+            }
+            return default(int);
         }
-        public void NamePlayers(string userInput)
+        public void setStartingScore(Player firstGamePlayer, Player secondGamePlayer)
         {
-            if (userInput == "2")
+            firstGamePlayer.playerScore = 0;
+            secondGamePlayer.playerScore = 0;
+        }
+        public void NamePlayers(int userInput)
+        {
+            if (userInput == 2)
             {
                 firstPlayer = new Player();
                 secondPlayer = new Player();
@@ -62,7 +114,7 @@ namespace RPSLSv2
                 Console.WriteLine("\r\nPlease type the name for the second player");
                 secondPlayer.playerName = Console.ReadLine().ToLower();
             }
-            if (userInput == "1")
+            if (userInput == 1)
             {
                 firstPlayer = new Player();
                 secondPlayer = new Player();
@@ -90,33 +142,121 @@ namespace RPSLSv2
                 Console.WriteLine("\r\nYou will be playing against {0}", secondPlayer.playerName);
             }
         }
+        public int determineGameRounds()
+        {
+            Console.WriteLine("\r\nPlease select the number of rounds required to win");
+            int totalRounds;
+            totalRounds = Convert.ToInt32(Console.ReadLine());
+            return totalRounds;
+        }
         public void promptSelection(Player gamePlayer)
         {
-            Console.WriteLine("Okay {0}, please make your selection",gamePlayer.playerName);
+            Console.WriteLine("\r\nOkay {0}, please make your selection",gamePlayer.playerName);
         }
         public string makeSelection(Player gamePlayer)
         {
-            Console.WriteLine("Please pick either 'Rock' - 'Paper' - 'Scissors' - 'Lizard' or 'Spock'");
-            
-            gamePlayer.playerGameSelection = Console.ReadLine();
-            Console.Clear();
+            Console.WriteLine("\r\nPlease pick either 'Rock' - 'Paper' - 'Scissors' - 'Lizard' or 'Spock'");        
+            gamePlayer.playerGameSelection = Console.ReadLine().ToLower();
+            switch (gamePlayer.playerGameSelection)
+            {
+                case "rock":
+                case "paper":
+                case "scissors":
+                case "lizard":
+                case "spock":
+                    Console.Clear();
+                    return gamePlayer.playerGameSelection;
+                default:
+                    Console.WriteLine("Invalid Selection - Please pick either 'Rock' - 'Paper' - 'Scissors' - 'Lizard' or 'Spock'");
+                    makeSelection(gamePlayer);
+                    break;              
+            }
             return gamePlayer.playerGameSelection;
+        }
+        public string MakeAiSelection(Player gamePlayer)
+        {
+            Console.WriteLine("\r\nAlright it's the {0} turn", gamePlayer.playerName);
+            Random rand = new Random();
             
+            gamePlayer.playerGameSelection = (gameChoices[rand.Next(0, 5)]);
+            Console.WriteLine("{0} selected {1}", gamePlayer.playerName, gamePlayer.playerGameSelection);
+            return gamePlayer.playerGameSelection ;
         }
-        public Player comparePlayerSelections(Player firstPlayer, Player secondPlayer)
-        {
-
-            return firstPlayer;
+        public int comparePlayerSelections(Player firstPlayer, Player secondPlayer)
+         {
+            int firstPlayerChoice;
+            int secondPlayerChoice;
+            firstPlayerChoice = gameChoices.IndexOf(firstPlayer.playerGameSelection);
+            secondPlayerChoice = gameChoices.IndexOf(secondPlayer.playerGameSelection);
+            int result;
+            result = (5 + gameChoices.IndexOf(firstPlayer.playerGameSelection) - gameChoices.IndexOf(secondPlayer.playerGameSelection)) % 5;
+            return result;
         }
-        public int assignRoundPoints(Player gamePlayer)
+        public void assignRoundPoints(int result, Player firstPlayer, Player secondPlayer)
         {
-            int roundPoint;
-            roundPoint = 1;
-            return roundPoint;
+            if (result % 2 != 0)
+            {
+                Console.WriteLine("\r\nCongrats {0}, you are the winner!", firstPlayer.playerName);
+                firstPlayer.playerScore++;
+            }
+            else if (result % 2 == 0 && result != 0)
+            {
+                Console.WriteLine("\r\nCongrats {0}, you are the winner!", secondPlayer.playerName);
+                secondPlayer.playerScore++;
+            }
+            else if (result == 0)
+            {
+                Console.WriteLine("\r\nIt's a Tie! please select again!");
+            }
+            else
+            {
+                Console.WriteLine("\r\nSomething went wrong. Try again!");
+            }
         }
-        public bool determineWinner(Player gamePlayer)
+        public void ClearScreen()
         {
-            return true;
-        } 
+            Console.Clear();
+        }
+        public void ContinueGame()
+        {
+            Console.WriteLine("\r\nPress anykey to continue");
+            Console.ReadLine();
+        }
+        public void DisplayScore(Player firstGamePlayer, Player secondGamePlayer)
+        {
+            Console.WriteLine("\r\nTotal Score:");
+            Console.WriteLine("{0} has {1} points",firstGamePlayer.playerName,firstGamePlayer.playerScore);
+            Console.WriteLine("{0} has {1} points", secondGamePlayer.playerName, secondGamePlayer.playerScore);
+        }
+        public void DetermineGameWinner(Player firstGamePlayer, Player secondGamePlayer)
+        {
+            if (firstGamePlayer.playerScore > secondGamePlayer.playerScore)
+            {
+                Console.WriteLine("Congrats {0}! You have won the game!!",firstGamePlayer.playerName);
+            }
+            else if (secondGamePlayer.playerScore > firstGamePlayer.playerScore)
+            {
+                Console.WriteLine("Congrats {0}! You have won the game!!", secondGamePlayer.playerName);
+            }
+        }
+        public void DisplayRestartMessage()
+        {
+            Console.WriteLine("\r\nWould you like to play another game? 'Yes' or 'No'");
+            string userinput;
+            userinput = Console.ReadLine().ToLower();
+            switch (userinput)
+            {
+                case "yes":
+                    ClearScreen();
+                    runGameLoop();
+                    break;
+                case "no":
+                    Console.WriteLine("\r\nOkay. Thanks for playing");
+                    Console.WriteLine("Press any key to exit");
+                    Console.ReadLine();
+                    Environment.Exit(0);
+                    break;
+            }
+        }
     }
 }
