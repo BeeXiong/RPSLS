@@ -18,7 +18,7 @@ namespace RPSLSv2
         public void runGameLoop()
         {
             displayWelcome();
-            ContinueGame();
+            RequestToProceed();
             ClearScreen();
             int numberOfPlayers;
             numberOfPlayers = determinePlayers();
@@ -27,8 +27,7 @@ namespace RPSLSv2
             int roundSelection;
             roundSelection = determineGameRounds();
             setStartingScore(firstPlayer, secondPlayer);
-            ClearScreen();
-            
+            ClearScreen();   
             while (firstPlayer.playerScore < roundSelection && secondPlayer.playerScore < roundSelection)
             {
                 if (numberOfPlayers == 2)
@@ -46,10 +45,10 @@ namespace RPSLSv2
                 }
                 int result;
                 result = comparePlayerSelections(firstPlayer, secondPlayer);
-                ContinueGame();
-                assignRoundPoints(result, firstPlayer, secondPlayer);
+                RequestToProceed();
+                AssignRoundPoints(result, firstPlayer, secondPlayer);
                 DisplayScore(firstPlayer,secondPlayer);
-                ContinueGame();
+                RequestToProceed();
                 ClearScreen();
             }
             DetermineGameWinner(firstPlayer,secondPlayer);
@@ -192,7 +191,7 @@ namespace RPSLSv2
             result = (5 + gameChoices.IndexOf(firstPlayer.playerGameSelection) - gameChoices.IndexOf(secondPlayer.playerGameSelection)) % 5;
             return result;
         }
-        public void assignRoundPoints(int result, Player firstPlayer, Player secondPlayer)
+        public void AssignRoundPoints(int result, Player firstPlayer, Player secondPlayer)
         {
             if (result % 2 != 0)
             {
@@ -217,7 +216,7 @@ namespace RPSLSv2
         {
             Console.Clear();
         }
-        public void ContinueGame()
+        public void RequestToProceed()
         {
             Console.WriteLine("\r\nPress anykey to continue");
             Console.ReadLine();
